@@ -1,41 +1,112 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 const Navbar = ({ user, setUser }) => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    navigate("/");
+    navigate("/login");
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white text-lg font-bold">
-          MERN Auth
+    <nav className="bg-black border-b border-gray-800 py-4 px-6 sticky top-0 z-50 shadow-md">
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+        {/* Logo */}
+        <Link
+          to="/"
+          className="text-yellow-400 text-2xl font-bold tracking-wide hover:opacity-90 transition"
+        >
+          UBER CAPTAIN
         </Link>
-        <div>
+
+        {/* Menu for small screens */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="text-yellow-400 md:hidden"
+        >
+          {open ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center space-x-4">
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600"
-            >
-              Logout
-            </button>
+            <>
+              <span className="text-gray-300 text-sm">
+                Hello, <span className="text-yellow-400">{user.username}</span>
+              </span>
+              <button
+                onClick={handleLogout}
+                className="bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <>
-              <Link className="text-white mx-2 hover:underline" to="/login">
+              <Link
+                to="/login"
+                className="text-gray-300 hover:text-yellow-400 transition px-2"
+              >
                 Login
               </Link>
-              <Link className="text-white mx-2 hover:underline" to="/register">
+              <Link
+                to="/register"
+                className="text-gray-300 hover:text-yellow-400 transition px-2"
+              >
                 Register
               </Link>
             </>
           )}
         </div>
       </div>
+
+      {/* Mobile Dropdown Menu */}
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, y: -15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="md:hidden bg-[#111] mt-3 p-5 rounded-xl border border-gray-800"
+        >
+          {user ? (
+            <>
+              <p className="text-gray-300 mb-3">
+                Logged in as{" "}
+                <span className="text-yellow-400 font-semibold">
+                  {user.username}
+                </span>
+              </p>
+
+              <button
+                onClick={handleLogout}
+                className="w-full bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="block text-gray-300 hover:text-yellow-400 mb-3"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="block text-gray-300 hover:text-yellow-400"
+              >
+                Register
+              </Link>
+            </>
+          )}
+        </motion.div>
+      )}
     </nav>
   );
 };
