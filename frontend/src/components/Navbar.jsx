@@ -22,7 +22,7 @@ const Navbar = ({ user, setUser }) => {
           to="/"
           className="text-yellow-400 text-2xl font-bold tracking-wide hover:opacity-90 transition"
         >
-          UBER CAPTAIN
+          CAPTAIN-ASSISTANT
         </Link>
 
         {/* Menu for small screens */}
@@ -40,6 +40,18 @@ const Navbar = ({ user, setUser }) => {
               <span className="text-gray-300 text-sm">
                 Hello, <span className="text-yellow-400">{user.username}</span>
               </span>
+
+              {/* Predict Button */}
+              <button
+                onClick={() =>
+                  (window.location.href = "https://www.localhost:5172")
+                }
+                className="border border-yellow-400 text-yellow-400 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 hover:text-black transition shadow-md"
+              >
+                Predict
+              </button>
+
+              {/* Logout Button */}
               <button
                 onClick={handleLogout}
                 className="bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition"
@@ -82,6 +94,17 @@ const Navbar = ({ user, setUser }) => {
                 </span>
               </p>
 
+              {/* Predict Button */}
+              <button
+                onClick={() =>
+                  (window.location.href = "https://www.google.com")
+                }
+                className="w-full border border-yellow-400 text-yellow-400 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 hover:text-black transition mb-3 shadow-md"
+              >
+                Predict
+              </button>
+
+              {/* Logout Button */}
               <button
                 onClick={handleLogout}
                 className="w-full bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition"
